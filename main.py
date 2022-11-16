@@ -34,7 +34,8 @@ taskListLabel = Label(Content)
 
 cal = Calendar(Content, selectmode='day')
 select = StringVar()
-selected1 = StringVar()
+dropDownSelection1 = StringVar()
+dropDownSelection2 = StringVar()
 
 #variables
 i = 0
@@ -58,11 +59,8 @@ def addTeamsMembers():
 
     for entry in entries:
         nameList.append(entry.get())
-    print("name List\n" + str(nameList))
-
     for entry in entries2:
         roleList.append(entry.get())
-    print("\nRole List: \n" + str(roleList))
 
     x = 0
     for x in range(len(nameList)):
@@ -91,7 +89,6 @@ def contButtonCreateTeam():
         [addTeamsMembers(),
          continueButtonAddTeamsMembers.grid_remove(),nameLabel.grid_remove(), roleLabel.grid_remove()])
     continueButtonAddTeamsMembers.grid(row=1, column=0)
-    print(numTeamMembers)
     nameLabel = Label(Content, text="Name")
     nameLabel.grid(row=0, column=1)
     roleLabel = Label(Content, text="Role")
@@ -132,7 +129,7 @@ def listRemove():
 
 
 def contButtonGetSchedule():
-    name = selected1.get()
+    name = dropDownSelection1.get()
     print(name)
     date = cal.get_date()
     output = ""
@@ -178,9 +175,9 @@ def contButtonAddTask():
                 l.destroy()
 
 
-def contButton1():
+def selectOptionCommand():
 
-    if selected.get() == options[1]:
+    if dropDownSelection.get() == options[1]:
         instruction.set("Enter your Member Information")
         continueButton = Button(
             Content,
@@ -192,9 +189,9 @@ def contButton1():
         nameEntry.grid(row=0, column=1)
         roleEntry.grid(row=0, column=2)
 
-    if selected.get() == options[3]:
-        selected1.set("Select Member to View")
-        menu = OptionMenu(Content, selected1, *nameList)
+    if dropDownSelection.get() == options[3]:
+        dropDownSelection1.set("Select Member to View")
+        menu = OptionMenu(Content, dropDownSelection1, *nameList)
         print(str(nameList))
         menu.grid(row=3, column=2)
         instruction.set("Select a Date")
@@ -207,7 +204,7 @@ def contButton1():
         continueButton.grid(row=1, column=0)
         cal.grid(row=0, column=1, rowspan=2, columnspan=2)
 
-    if selected.get() == options[4]:
+    if dropDownSelection.get() == options[4]:
         select.set("which role for the task?")
         noRepeatRoleList = [*set(roleList)]
         menu = OptionMenu(Content, select, *noRepeatRoleList)
@@ -229,6 +226,20 @@ def contButton1():
             [contButtonAddTask(),
              continueButton.grid_remove()])
         continueButton.grid(row=1, column=0)
+    if dropDownSelection.get() == options[5]:
+        dropDownSelection2.set("Which teamMember?")
+        i = 0
+        roleList = []
+        nameList = []
+        for i in range(len(teamList)):
+            roleList.append(teamList[i].role)
+            nameList.append(teamList[i].name)
+        menu = OptionMenu(Content, dropDownSelection2, *nameList)
+        menu.grid(row=0, column=2)
+        continueButton = Button(
+            Content,
+            text="Continue "
+        )
 
 
 options = [
@@ -237,10 +248,11 @@ options = [
     "Edit Member",
     "View Schedule",
     "Add Task",
+    "Complete Task"
 ]
-selected = StringVar()
-selected.set(options[0])
-dropDown = OptionMenu(Content, selected, *options)
+dropDownSelection = StringVar()
+dropDownSelection.set(options[0])
+dropDown = OptionMenu(Content, dropDownSelection, *options)
 
 
 def tempTextTeam(e):
@@ -298,7 +310,7 @@ numTeamMembersEntry.grid(row=0, column=3)
 def startUp():
     dropDown.grid(row=0, column=0)
     dropDownButton = Button(Content, text="Select option",
-                            command=contButton1).grid(row=2, column=0)
+                            command=selectOptionCommand).grid(row=2, column=0)
 
 
 def testButtonCommand():
