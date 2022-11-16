@@ -36,6 +36,7 @@ cal = Calendar(Content, selectmode='day')
 select = StringVar()
 dropDownSelection1 = StringVar()
 dropDownSelection2 = StringVar()
+dropDownSelection3 = StringVar()
 
 #variables
 i = 0
@@ -174,7 +175,32 @@ def contButtonAddTask():
             if count == 1:
                 l.destroy()
 
+def completeTaskCommand():
+    nameToFind = dropDownSelection2.get()
+    i = 0
+    for i in range(len(teamList)):
+        if(teamList[i].name == nameToFind):
+            indexToDisplayTaskListFor = i
+    menu = OptionMenu(Content, dropDownSelection3, *teamList[i].taskList)
+    menu.grid(row=0, column=2)
+    
+    completeTaskButton = Button(Content,
+        text="Complete task",
+         command= lambda: [
+            deleteTaskFromList(indexToDisplayTaskListFor),
+            completeTaskButton.grid_remove(),
+            menu.grid_remove(),
 
+         ])
+    completeTaskButton.grid(row=1, column=0)
+def deleteTaskFromList(teamIndex):
+    i =0
+    taskIndex = 0
+    for i in range(len(teamList[teamIndex].taskList)):
+        if teamList[teamIndex].taskList == dropDownSelection3.get():
+            taskIndex = i
+    del teamList[teamIndex].taskList[taskIndex]
+    print("testedddd\n", teamList[teamIndex].taskList)
 def selectOptionCommand():
 
     if dropDownSelection.get() == options[1]:
@@ -226,20 +252,27 @@ def selectOptionCommand():
             [contButtonAddTask(),
              continueButton.grid_remove()])
         continueButton.grid(row=1, column=0)
+
     if dropDownSelection.get() == options[5]:
         dropDownSelection2.set("Which teamMember?")
         i = 0
-        roleList = []
-        nameList = []
+        roleList1 = []
+        nameList1 = []
         for i in range(len(teamList)):
-            roleList.append(teamList[i].role)
-            nameList.append(teamList[i].name)
-        menu = OptionMenu(Content, dropDownSelection2, *nameList)
+            roleList1.append(teamList[i].role)
+            nameList1.append(teamList[i].name)
+        menu = OptionMenu(Content, dropDownSelection2, *nameList1)
         menu.grid(row=0, column=2)
         continueButton = Button(
             Content,
-            text="Continue "
+            text="select member to complete task",
+            command= lambda:
+            [completeTaskCommand(),
+            continueButton.grid_remove(),
+            menu.grid_remove()
+            ]
         )
+        continueButton.grid(row=1, column=0)
 
 
 options = [
