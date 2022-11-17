@@ -38,6 +38,7 @@ dropDownSelection1 = StringVar()
 dropDownSelection2 = StringVar()
 dropDownSelection3 = StringVar()
 dropDownSelection4 = StringVar()
+dropDownSelection5 = StringVar()
 
 #variables
 i = 0
@@ -212,8 +213,20 @@ def removeMemberCommand():
             indexToDelete = i
     del teamList[indexToDelete]
 
-
-    
+def changeRoleCommand():
+    newRoleEntry = Entry(Content)
+    newRoleEntry.grid(row=0, column=1)
+    finishChangeRoleButton = Button(Content, text="Set New Role", command=
+        lambda: [changeRole(dropDownSelection5.get(),newRoleEntry.get()),
+        newRoleEntry.grid_remove(),
+        finishChangeRoleButton.grid_remove()
+        ])
+    finishChangeRoleButton.grid(row=1, column=0)
+def changeRole(name, role):
+    i = 0
+    for i in range(len(teamList)):
+        if(teamList[i].name == name):
+            teamList[i].role = role
 def selectOptionCommand():
     if dropDownSelection.get() == options[0]:
         instruction.set("Choose member")
@@ -248,6 +261,23 @@ def selectOptionCommand():
         continueButton.grid(row=1, column=0)
         nameEntry.grid(row=0, column=1)
         roleEntry.grid(row=0, column=2)
+
+    if dropDownSelection.get() == options[2]:
+        i = 0
+        roleList1 = []
+        nameList1 = []
+        for i in range(len(teamList)):
+            roleList1.append(teamList[i].role)
+            nameList1.append(teamList[i].name)
+        menu = OptionMenu(Content, dropDownSelection5, *nameList1)
+        menu.grid(row=0, column=1)
+        dropDownSelection5.set("Choose member to edit")
+        continueButton = Button(Content, text="Edit role", command=lambda: 
+            [changeRoleCommand(),
+            menu.grid_remove(),
+            continueButton.grid_remove()
+            ])
+        continueButton.grid(row=1, column=0)
 
     if dropDownSelection.get() == options[3]:
         dropDownSelection1.set("Select Member to View")
@@ -324,7 +354,7 @@ def selectOptionCommand():
 options = [
     "Edit Team",
     "Add Member",
-    "Edit Member",
+    "Change Role",
     "View Schedule",
     "Add Task",
     "Complete Task"
