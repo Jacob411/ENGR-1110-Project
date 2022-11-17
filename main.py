@@ -177,9 +177,23 @@ def contButtonAddTask():
             if count == 1:
                 l.destroy()
 
+def updateLists():
+    i = 0
+    roleList1 = []
+    nameList1 = []
+    for i in range(len(teamList)):
+        roleList1.append(teamList[i].role)
+        nameList1.append(teamList[i].name) 
 
 def contButton1():
-
+    if selected.get() == options[0]:
+        instruction.set("Choose member to remove")
+        i = 0
+        roleList1 = []
+        nameList1 = []
+        for i in range(len(teamList)):
+            roleList1.append(teamList[i].role)
+            nameList1.append(teamList[i].name)
     if selected.get() == options[1]:
         instruction.set("Enter your Member Information")
         continueButton = Button(
@@ -232,7 +246,7 @@ def contButton1():
 
 
 options = [
-    "Edit Team",
+    "Remove Member",
     "Add Member",
     "Edit Member",
     "View Schedule",
