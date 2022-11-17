@@ -37,6 +37,7 @@ select = StringVar()
 dropDownSelection1 = StringVar()
 dropDownSelection2 = StringVar()
 dropDownSelection3 = StringVar()
+dropDownSelection4 = StringVar()
 
 #variables
 i = 0
@@ -201,7 +202,40 @@ def deleteTaskFromList(teamIndex):
             taskIndex = i
     del teamList[teamIndex].taskList[taskIndex]
     print("testedddd\n", teamList[teamIndex].taskList)
+
+
+def removeMemberCommand():
+    nameToFind = dropDownSelection4.get()
+    i = 0
+    for i in range(len(teamList)):
+        if(teamList[i].name == nameToFind):
+            indexToDelete = i
+    del teamList[indexToDelete]
+
+
+    
 def selectOptionCommand():
+    if dropDownSelection.get() == options[0]:
+        instruction.set("Choose member")
+        dropDownSelection4.set("Member to Remove")
+        i = 0
+        roleList1 = []
+        nameList1 = []
+        for i in range(len(teamList)):
+            roleList1.append(teamList[i].role)
+            nameList1.append(teamList[i].name)
+        menu = OptionMenu(Content, dropDownSelection4, *nameList1)
+        menu.grid(row=0, column=1)
+        continueButton = Button(
+            Content,
+            text="Remove",
+            command= lambda:
+            [removeMemberCommand(),
+            continueButton.grid_remove(),
+            menu.grid_remove()
+            ]
+        )
+        continueButton.grid(row=1, column=0)
 
     if dropDownSelection.get() == options[1]:
         instruction.set("Enter your Member Information")
