@@ -76,7 +76,7 @@ def addTeamsMembers():
     instruction.set("Adding Members")
 
 
-def contButtonCreateTeam():
+def createTeamCommand():
     global teamName
     global numTeamMembers
     global i
@@ -107,7 +107,7 @@ def contButtonCreateTeam():
     instruction.set("Creating Team")
 
 
-def contButtonAddMember():
+def addMemberCommand():
 
     teamList.append(member(nameEntry.get(), roleEntry.get()))
     nameEntry.delete(0, END)
@@ -129,7 +129,7 @@ def listRemove():
                 l.destroy()
 
 
-def contButtonGetSchedule():
+def getScheduleCommand():
     name = dropDownSelection1.get()
     print(name)
     date = cal.get_date()
@@ -154,7 +154,7 @@ def contButtonGetSchedule():
     doneButton.grid(row=2, column=3)
 
 
-def contButtonAddTask():
+def addTaskCommand():
     task1 = task(descriptionEntry.get(), select.get(), cal.get_date())
     print(descriptionEntry.get(), select.get())
     i = 0
@@ -209,7 +209,7 @@ def selectOptionCommand():
             Content,
             text="Continue add member",
             command=lambda:
-            [contButtonAddMember(),
+            [addMemberCommand(),
              continueButton.grid_remove()])
         continueButton.grid(row=1, column=0)
         nameEntry.grid(row=0, column=1)
@@ -217,22 +217,34 @@ def selectOptionCommand():
 
     if dropDownSelection.get() == options[3]:
         dropDownSelection1.set("Select Member to View")
-        menu = OptionMenu(Content, dropDownSelection1, *nameList)
-        print(str(nameList))
+        i = 0
+        roleList1 = []
+        nameList1 = []
+        for i in range(len(teamList)):
+            roleList1.append(teamList[i].role)
+            nameList1.append(teamList[i].name)
+        menu = OptionMenu(Content, dropDownSelection1, *nameList1)
+        print(str(nameList1))
         menu.grid(row=3, column=2)
         instruction.set("Select a Date")
         continueButton = Button(
             Content,
             text="Continue Get schedule",
             command=lambda:
-            [contButtonGetSchedule(),
+            [getScheduleCommand(),
              continueButton.grid_remove()])
         continueButton.grid(row=1, column=0)
         cal.grid(row=0, column=1, rowspan=2, columnspan=2)
 
     if dropDownSelection.get() == options[4]:
         select.set("which role for the task?")
-        noRepeatRoleList = [*set(roleList)]
+        i = 0
+        roleList1 = []
+        nameList1 = []
+        for i in range(len(teamList)):
+            roleList1.append(teamList[i].role)
+            nameList1.append(teamList[i].name)
+        noRepeatRoleList = [*set(roleList1)]
         menu = OptionMenu(Content, select, *noRepeatRoleList)
         menu.grid(row=0, column=2)
         instruction.set("Enter a Task")
@@ -249,7 +261,7 @@ def selectOptionCommand():
             Content,
             text="Continue add task",
             command=lambda:
-            [contButtonAddTask(),
+            [addTaskCommand(),
              continueButton.grid_remove()])
         continueButton.grid(row=1, column=0)
 
@@ -299,7 +311,7 @@ teamNameEntry.bind("<FocusIn>", tempTextTeam)
 continueButton = Button(Content,
                         text="Continue",
                         command=lambda: [
-                            contButtonCreateTeam(),
+                            createTeamCommand(),
                             continueButton.grid_remove(),
                             incrementButton.grid_remove(),
                             decrementButton.grid_remove(),
