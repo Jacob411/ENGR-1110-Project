@@ -34,8 +34,8 @@ taskListLabel = Label(Content)
 
 cal = Calendar(Content, selectmode='day')
 select = StringVar()
-dropDownSelection1 = StringVar()
-dropDownSelection2 = StringVar()
+getScheduleDropDownSelection = StringVar()
+DropDownSelection2 = StringVar()
 dropDownSelection3 = StringVar()
 dropDownSelection4 = StringVar()
 dropDownSelection5 = StringVar()
@@ -132,7 +132,7 @@ def listRemove():
 
 
 def getScheduleCommand():
-    name = dropDownSelection1.get()
+    name = getScheduleDropDownSelection.get()
     print(name)
     date = cal.get_date()
     output = ""
@@ -178,7 +178,7 @@ def addTaskCommand():
                 l.destroy()
 
 def completeTaskCommand():
-    nameToFind = dropDownSelection2.get()
+    nameToFind = DropDownSelection2.get()
     i = 0
     for i in range(len(teamList)):
         if(teamList[i].name == nameToFind):
@@ -280,14 +280,14 @@ def selectOptionCommand():
         continueButton.grid(row=1, column=0)
 
     if dropDownSelection.get() == options[3]:
-        dropDownSelection1.set("Select Member to View")
+        getScheduleDropDownSelection.set("Select Member to View")
         i = 0
         roleList1 = []
         nameList1 = []
         for i in range(len(teamList)):
             roleList1.append(teamList[i].role)
             nameList1.append(teamList[i].name)
-        menu = OptionMenu(Content, dropDownSelection1, *nameList1)
+        menu = OptionMenu(Content, getScheduleDropDownSelection, *nameList1)
         print(str(nameList1))
         menu.grid(row=3, column=2)
         instruction.set("Select a Date")
@@ -330,14 +330,14 @@ def selectOptionCommand():
         continueButton.grid(row=1, column=0)
 
     if dropDownSelection.get() == options[5]:
-        dropDownSelection2.set("Which teamMember?")
+        DropDownSelection2.set("Which teamMember?")
         i = 0
         roleList1 = []
         nameList1 = []
         for i in range(len(teamList)):
             roleList1.append(teamList[i].role)
             nameList1.append(teamList[i].name)
-        menu = OptionMenu(Content, dropDownSelection2, *nameList1)
+        menu = OptionMenu(Content, DropDownSelection2, *nameList1)
         menu.grid(row=0, column=2)
         continueButton = Button(
             Content,
