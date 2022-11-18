@@ -382,24 +382,21 @@ continueButton = Button(Content,
                             teamNameEntry.grid_remove()
                         ])
 numTeamMembersSpinBox = Spinbox(Content, from_=0, to=100, width=5)
-continueButton.grid(row=0, column=0)
-teamNameEntry.grid(row=0, column=1)
-numTeamMembersSpinBox.grid(row=0, column=3)
+def welcomeCommand():
+    continueButton.grid(row=0, column=0)
+    teamNameEntry.grid(row=0, column=1)
+    numTeamMembersSpinBox.grid(row=0, column=3)
+
 
 def startUp():
     dropDown.grid(row=0, column=0)
     dropDownButton = Button(Content, text="Select option",
                             command=selectOptionCommand).grid(row=2, column=0)
 
+welcomeLabel = Label(Content, text="Welcome to teamMate")
+welcomeLabel.grid(row=0, column=0)
+welcomeButton = Button(Content, text= "Get Started", command=lambda: [welcomeCommand(),
+    welcomeButton.grid_remove(), welcomeLabel.grid_remove()])
+welcomeButton.grid(row=1, column=0)
 
-def testButtonCommand():
-    list = Content.grid_slaves()
-    for l in list:
-        l.destroy()
-
-    testButton = Button(Content, text="Test", command=testButtonCommand)
-    testButton.grid(row=0, column=4)
-
-
-#main
 root.mainloop()
