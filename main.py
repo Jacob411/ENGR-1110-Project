@@ -3,12 +3,15 @@ from tkcalendar import Calendar
 from member import member
 from task import task
 from tkinter import *
-#a lil comment test AKJDfhlkjsdhfkjashfkjsahkfjsadsfm,namdsfadfjkashdf
-#for multiple branches
+
 #initializes window
 root = Tk()
+root.option_add("*Font", 'Sans 20')
 root.title("TeamMate")
-root.geometry("600x600")
+width= root.winfo_screenwidth()
+height= root.winfo_screenheight()
+#setting tkinter window size
+root.geometry("%dx%d" % (width, height))
 
 Header = Frame(root, bg='black', height=30)
 Content = Frame(root, pady=10)
@@ -75,7 +78,7 @@ def addTeamsMembers():
             l.destroy()
 
     startUp()
-    instruction.set("Adding Members")
+    instruction.set("Team Created!")
 
 
 def createTeamCommand():
@@ -228,6 +231,19 @@ def changeRole(name, role):
         if(teamList[i].name == name):
             teamList[i].role = role
 def selectOptionCommand():
+    currentOption = dropDownSelection.get()
+    list = Content.grid_slaves()
+    count = 0
+    for l in list:
+        l.destroy()
+
+    newSelectOptionButton = Button(Content, text="Select option", command=selectOptionCommand)
+    newSelectOptionButton.grid(row=1, column=0)
+    newDropDown = OptionMenu(Content, dropDownSelection, *options)
+    dropDownSelection.set(currentOption)
+    newDropDown.grid(row=0, column=0)
+    
+
     if dropDownSelection.get() == options[0]:
         instruction.set("Choose member")
         dropDownSelection4.set("Member to Remove")
@@ -367,12 +383,12 @@ dropDown = OptionMenu(Content, dropDownSelection, *options)
 def tempTextTeam(e):
     teamNameEntry.delete(0, "end")
 
-instruction.set("Enter your Team Information")
+
 
 teamNameEntry.insert(0, "Enter Team Name")
 teamNameEntry.bind("<FocusIn>", tempTextTeam)
 
-continueButton = Button(Content,
+continueButton = Button(Content, 
                         text="Continue",
                         command=lambda: [
                             createTeamCommand(),
@@ -386,17 +402,22 @@ def welcomeCommand():
     continueButton.grid(row=0, column=0)
     teamNameEntry.grid(row=0, column=1)
     numTeamMembersSpinBox.grid(row=0, column=3)
+    instruction.set("Enter your Team Information")
 
 
 def startUp():
     dropDown.grid(row=0, column=0)
     dropDownButton = Button(Content, text="Select option",
-                            command=selectOptionCommand).grid(row=2, column=0)
+                            command=selectOptionCommand)
+    dropDownButton.grid(row=2, column=0)
 
-welcomeLabel = Label(Content, text="Welcome to teamMate")
-welcomeLabel.grid(row=0, column=0)
-welcomeButton = Button(Content, text= "Get Started", command=lambda: [welcomeCommand(),
-    welcomeButton.grid_remove(), welcomeLabel.grid_remove()])
-welcomeButton.grid(row=1, column=0)
+
+welcomeLabel = Label(Content, text="Welcome to teamMate", relief= "flat", font=('Sans open', 20))
+welcomeLabel.grid(row=0, column=0, pady=40)
+welcomeButton = Button(Content, text= "Get Started", font=('Sans serif',20),
+    command=lambda: [welcomeCommand(),
+        welcomeButton.grid_remove(),
+        welcomeLabel.grid_remove()])
+welcomeButton.grid(row=1, column=0, pady=60)
 
 root.mainloop()
