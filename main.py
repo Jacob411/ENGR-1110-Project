@@ -7,6 +7,7 @@ from tkinter import *
 #initializes window
 root = Tk()
 root.option_add("*Font", 'Sans 20')
+root.configure(bg='#424242')
 root.title("TeamMate")
 width= root.winfo_screenwidth()
 height= root.winfo_screenheight()
@@ -21,9 +22,12 @@ instruction = StringVar()
 instruction.set("Main Menu")
 InstructionLabel = Label(Header,
                          textvariable=instruction,
-                         bg='black',
-                         fg='white').pack()
-
+                         bg='grey',
+                         fg='white',
+                         bd= 3
+                         ).pack(),
+                         
+Header.config(bg='grey')
 Header.pack(fill='both')
 Content.pack()
 
@@ -397,7 +401,7 @@ continueButton = Button(Content,
                             numTeamMembersSpinBox.grid_remove(),
                             teamNameEntry.grid_remove()
                         ])
-numTeamMembersSpinBox = Spinbox(Content, from_=0, to=100, width=5)
+numTeamMembersSpinBox = Spinbox(Content, from_=0, to=100, width=5, bg="#424242")
 def welcomeCommand():
     continueButton.grid(row=0, column=0)
     teamNameEntry.grid(row=0, column=1)
@@ -412,9 +416,10 @@ def startUp():
     dropDownButton.grid(row=2, column=0)
 
 
-welcomeLabel = Label(Content, text="Welcome to teamMate", relief= "flat", font=('Sans open', 20))
+welcomeLabel = Label(Content, text="Welcome to teamMate", relief= "flat", font=('Sans open', 20), bg="#424242", fg="white")
 welcomeLabel.grid(row=0, column=0, pady=40)
-welcomeButton = Button(Content, text= "Get Started", font=('Sans serif',20),
+Content.config(bg="#424242")
+welcomeButton = Button(Content, text= "Get Started", font=('Sans serif',20), bg="#424242", fg= "white",
     command=lambda: [welcomeCommand(),
         welcomeButton.grid_remove(),
         welcomeLabel.grid_remove()])
