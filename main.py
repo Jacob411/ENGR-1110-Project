@@ -39,7 +39,7 @@ descriptionEntry = Entry(Content)
 numTeamMembersEntry = Entry(Content, width=5)
 taskListLabel = Label(Content)
 
-cal = Calendar(Content, selectmode='day')
+cal = Calendar(Content, font="Sans 12",  selectmode='day')
 select = StringVar()
 getScheduleDropDownSelection = StringVar()
 DropDownSelection2 = StringVar()
@@ -94,7 +94,7 @@ def createTeamCommand():
     numTeamMembers = numTeamMembersSpinBox.get()
     continueButtonAddTeamsMembers = Button(
         Content,
-        text="Add Members",
+        text="Add Member",
         command=lambda:
         [addTeamsMembers(),
          continueButtonAddTeamsMembers.grid_remove(),nameLabel.grid_remove(), roleLabel.grid_remove()])
@@ -167,6 +167,7 @@ def addTaskCommand():
     task1 = task(descriptionEntry.get(), select.get(), cal.get_date())
     print(descriptionEntry.get(), select.get())
     i = 0
+    
     for i in range(len(teamList)):
         if (teamList[i].role == select.get()):
             teamList[i].taskList.append(task1)
@@ -187,6 +188,7 @@ def addTaskCommand():
 def completeTaskCommand():
     nameToFind = DropDownSelection2.get()
     i = 0
+    
     for i in range(len(teamList)):
         if(teamList[i].name == nameToFind):
             indexToDisplayTaskListFor = i
@@ -194,17 +196,18 @@ def completeTaskCommand():
     menu.grid(row=0, column=2)
     
     completeTaskButton = Button(Content,
-        text="Complete task",
+        text="Complete Task",
          command= lambda: [
             deleteTaskFromList(indexToDisplayTaskListFor),
             completeTaskButton.grid_remove(),
-            menu.grid_remove(),
-
+            menu.grid_remove()
          ])
     completeTaskButton.grid(row=1, column=0)
+    
 def deleteTaskFromList(teamIndex):
     i =0
     taskIndex = 0
+    
     for i in range(len(teamList[teamIndex].taskList)):
         if teamList[teamIndex].taskList == dropDownSelection3.get():
             taskIndex = i
@@ -241,7 +244,7 @@ def selectOptionCommand():
     for l in list:
         l.destroy()
 
-    newSelectOptionButton = Button(Content, text="Select option", command=selectOptionCommand)
+    newSelectOptionButton = Button(Content, text="Select Option", command=selectOptionCommand)
     newSelectOptionButton.grid(row=1, column=0)
     newDropDown = OptionMenu(Content, dropDownSelection, *options)
     dropDownSelection.set(currentOption)
@@ -249,7 +252,7 @@ def selectOptionCommand():
     
 
     if dropDownSelection.get() == options[0]:
-        instruction.set("Choose member")
+        instruction.set("Select Member")
         dropDownSelection4.set("Member to Remove")
         i = 0
         roleList1 = []
@@ -265,24 +268,28 @@ def selectOptionCommand():
             command= lambda:
             [removeMemberCommand(),
             continueButton.grid_remove(),
-            menu.grid_remove()
+            menu.grid_remove(),
+            instruction.set("Member Removed!")
             ]
         )
         continueButton.grid(row=1, column=0)
 
     if dropDownSelection.get() == options[1]:
-        instruction.set("Enter your Member Information")
+        instruction.set("Enter Member Information")
         continueButton = Button(
             Content,
-            text="Continue add member",
+            text="Add Member",
             command=lambda:
             [addMemberCommand(),
-             continueButton.grid_remove()])
+             continueButton.grid_remove(),
+             instruction.set("Member Added!")]
+            )
         continueButton.grid(row=1, column=0)
         nameEntry.grid(row=0, column=1)
         roleEntry.grid(row=0, column=2)
 
     if dropDownSelection.get() == options[2]:
+        instruction.set("Change Role")
         i = 0
         roleList1 = []
         nameList1 = []
@@ -291,11 +298,12 @@ def selectOptionCommand():
             nameList1.append(teamList[i].name)
         menu = OptionMenu(Content, dropDownSelection5, *nameList1)
         menu.grid(row=0, column=1)
-        dropDownSelection5.set("Choose member to edit")
-        continueButton = Button(Content, text="Edit role", command=lambda: 
+        dropDownSelection5.set("Choose Member Role to Change")
+        continueButton = Button(Content, text="Edit Role", command=lambda: 
             [changeRoleCommand(),
             menu.grid_remove(),
-            continueButton.grid_remove()
+            continueButton.grid_remove(),
+            instruction.set("Role Changed!")
             ])
         continueButton.grid(row=1, column=0)
 
@@ -313,7 +321,7 @@ def selectOptionCommand():
         instruction.set("Select a Date")
         continueButton = Button(
             Content,
-            text="Continue Get schedule",
+            text="View Schedule",
             command=lambda:
             [getScheduleCommand(),
              continueButton.grid_remove()])
@@ -321,7 +329,7 @@ def selectOptionCommand():
         cal.grid(row=0, column=1, rowspan=2, columnspan=2)
 
     if dropDownSelection.get() == options[4]:
-        select.set("which role for the task?")
+        select.set("Select Role for Task")
         i = 0
         roleList1 = []
         nameList1 = []
@@ -331,26 +339,28 @@ def selectOptionCommand():
         noRepeatRoleList = [*set(roleList1)]
         menu = OptionMenu(Content, select, *noRepeatRoleList)
         menu.grid(row=0, column=2)
-        instruction.set("Enter a Task")
+        instruction.set("Enter Task")
         cal.grid(row=1, column=2)
         descriptionEntry.grid(row=0, column=1)
 
         def tempTextTask(e):
             descriptionEntry.delete(0, "end")
 
-        descriptionEntry.insert(0, "Enter Description")
+        descriptionEntry.insert(0, "Enter Task Description")
         descriptionEntry.bind("<FocusIn>", tempTextTask)
 
         continueButton = Button(
             Content,
-            text="Continue add task",
+            text="Add Task",
             command=lambda:
             [addTaskCommand(),
-             continueButton.grid_remove()])
+             continueButton.grid_remove(),
+             instruction.set("Task Added!")])
         continueButton.grid(row=1, column=0)
 
     if dropDownSelection.get() == options[5]:
         DropDownSelection2.set("Which teamMember?")
+        dropDownSelection3.set("Which Task?")
         i = 0
         roleList1 = []
         nameList1 = []
@@ -361,18 +371,19 @@ def selectOptionCommand():
         menu.grid(row=0, column=2)
         continueButton = Button(
             Content,
-            text="select member to complete task",
+            text="Complete Task for Member",
             command= lambda:
             [completeTaskCommand(),
             continueButton.grid_remove(),
-            menu.grid_remove()
+            menu.grid_remove(),
+            instruction.set("Task Completed!")
             ]
         )
         continueButton.grid(row=1, column=0)
 
 
 options = [
-    "Edit Team",
+    "Remove Member",
     "Add Member",
     "Change Role",
     "View Schedule",
@@ -401,25 +412,25 @@ continueButton = Button(Content,
                             numTeamMembersSpinBox.grid_remove(),
                             teamNameEntry.grid_remove()
                         ])
-numTeamMembersSpinBox = Spinbox(Content, from_=0, to=100, width=5, bg="#424242")
+numTeamMembersSpinBox = Spinbox(Content, from_=1, to=100, width=5, bg="#424242")
 def welcomeCommand():
     continueButton.grid(row=0, column=0)
     teamNameEntry.grid(row=0, column=1)
     numTeamMembersSpinBox.grid(row=0, column=3)
-    instruction.set("Enter your Team Information")
+    instruction.set("Enter Team Information")
 
 
 def startUp():
     dropDown.grid(row=0, column=0)
-    dropDownButton = Button(Content, text="Select option",
+    dropDownButton = Button(Content, text="Select Option",
                             command=selectOptionCommand)
     dropDownButton.grid(row=2, column=0)
 
 
-welcomeLabel = Label(Content, text="Welcome to teamMate", relief= "flat", font=('Sans open', 20), bg="#424242", fg="white")
+welcomeLabel = Label(Content, text="Welcome to teamMate!", relief= "flat", font=('Sans open', 20), bg="#424242", fg="white")
 welcomeLabel.grid(row=0, column=0, pady=40)
 Content.config(bg="#424242")
-welcomeButton = Button(Content, text= "Get Started", font=('Sans serif',20), bg="#424242", fg= "white",
+welcomeButton = Button(Content, text= "Get Started", font=('Sans serif',20), bg="#424242", fg= "black",
     command=lambda: [welcomeCommand(),
         welcomeButton.grid_remove(),
         welcomeLabel.grid_remove()])
