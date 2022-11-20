@@ -14,7 +14,7 @@ height= root.winfo_screenheight()
 #setting tkinter window size
 root.geometry("%dx%d" % (width, height))
 
-Header = Frame(root, bg='black', height=30)
+Header = Frame(root, bg='black', height=70)
 Content = Frame(root, pady=10)
 Footer = Frame(root)
 
@@ -28,6 +28,7 @@ InstructionLabel = Label(Header,
                          ).pack(),
                          
 Header.config(bg='grey')
+
 Header.pack(fill='both')
 Content.pack()
 
@@ -39,7 +40,7 @@ descriptionEntry = Entry(Content)
 numTeamMembersEntry = Entry(Content, width=5)
 taskListLabel = Label(Content)
 
-cal = Calendar(Content, selectmode='day')
+cal = Calendar(Content, selectmode='day', width=50)
 select = StringVar()
 getScheduleDropDownSelection = StringVar()
 DropDownSelection2 = StringVar()
@@ -332,7 +333,7 @@ def selectOptionCommand():
         menu = OptionMenu(Content, select, *noRepeatRoleList)
         menu.grid(row=0, column=2)
         instruction.set("Enter a Task")
-        cal.grid(row=1, column=2)
+        cal.grid(row=1, column=1, columnspan=2, rowspan=2)
         descriptionEntry.grid(row=0, column=1)
 
         def tempTextTask(e):
