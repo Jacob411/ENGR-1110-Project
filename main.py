@@ -1,4 +1,3 @@
-from click import command
 from tkcalendar import Calendar
 from member import member
 from task import task
