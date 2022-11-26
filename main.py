@@ -7,7 +7,7 @@ from tkinter import *
 #initializes window
 root = Tk()
 root.option_add("*Font", 'Sans 20')
-root.configure(bg='#424242')
+root.configure(bg='#363636')
 root.title("TeamMate")
 width= root.winfo_screenwidth()
 height= root.winfo_screenheight()
@@ -34,7 +34,7 @@ Content.pack()
 #Entries
 nameEntry = Entry(Content)
 roleEntry = Entry(Content)
-teamNameEntry = Entry(Content)
+teamNameEntry = Entry(Content, bg="#363636", fg='white',borderwidth=10)
 descriptionEntry = Entry(Content)
 numTeamMembersEntry = Entry(Content, width=5)
 taskListLabel = Label(Content)
@@ -405,6 +405,8 @@ teamNameEntry.bind("<FocusIn>", tempTextTeam)
 
 continueButton = Button(Content, 
                         text="Continue",
+                        bg='black',
+                        fg= 'white',
                         command=lambda: [
                             createTeamCommand(),
                             continueButton.grid_remove(),
@@ -412,10 +414,10 @@ continueButton = Button(Content,
                             numTeamMembersSpinBox.grid_remove(),
                             teamNameEntry.grid_remove()
                         ])
-numTeamMembersSpinBox = Spinbox(Content, from_=1, to=100, width=5, bg="#424242")
+numTeamMembersSpinBox = Spinbox(Content, from_=1, to=100, width=5, bg="#363636", fg='white')
 def welcomeCommand():
     continueButton.grid(row=0, column=0)
-    teamNameEntry.grid(row=0, column=1)
+    teamNameEntry.grid(row=0, column=1, padx=50)
     numTeamMembersSpinBox.grid(row=0, column=3)
     instruction.set("Enter Team Information")
 
@@ -427,10 +429,10 @@ def startUp():
     dropDownButton.grid(row=2, column=0)
 
 
-welcomeLabel = Label(Content, text="Welcome to teamMate!", relief= "flat", font=('Sans open', 20), bg="#424242", fg="white")
+welcomeLabel = Label(Content, text="Welcome to teamMate!", relief= "flat", font=('Sans open', 20), bg="#363636", fg="white")
 welcomeLabel.grid(row=0, column=0, pady=40)
-Content.config(bg="#424242")
-welcomeButton = Button(Content, text= "Get Started", font=('Sans serif',20), bg="#424242", fg= "black",
+Content.config(bg="#363636")
+welcomeButton = Button(Content, text= "Get Started", font=('Sans serif',20), bg="#202020", fg= "white",
     command=lambda: [welcomeCommand(),
         welcomeButton.grid_remove(),
         welcomeLabel.grid_remove()])
