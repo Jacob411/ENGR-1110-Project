@@ -204,7 +204,7 @@ def completeTaskCommand():
     completeTaskButton = Button(Content, width=10,
         bg="#363636",
         fg='white',
-        text="Complete Task",
+        text="Complete",
          command= lambda: [
             deleteTaskFromList(indexToDisplayTaskListFor),
             completeTaskButton.grid_remove(),
@@ -402,7 +402,7 @@ def selectOptionCommand():
             bg="#363636",
             width=10,
             fg='white',
-            text="Complete Task for Member",
+            text="Select Member",
             command= lambda:
             [completeTaskCommand(),
             continueButton.grid_remove(),
