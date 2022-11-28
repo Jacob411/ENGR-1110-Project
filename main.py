@@ -32,7 +32,7 @@ Content.pack()
 
 #Entries
 nameEntry = Entry(Content,  bg="#202020", fg='white',borderwidth=5)
-roleEntry = Entry(Content, bg='#363636', fg='white')
+roleEntry = Entry(Content, bg='#363636', fg='white',borderwidth=5)
 teamNameEntry = Entry(Content, bg="#202020", fg='white',borderwidth=5)
 descriptionEntry = Entry(Content,  bg="#202020", fg='white',borderwidth=5)
 numTeamMembersEntry = Entry(Content, width=5,  bg="#202020", fg='white',borderwidth=5)
@@ -343,7 +343,7 @@ def selectOptionCommand():
             bg="#363636",
             width=10,
             fg='white',
-            text="View Schedule",
+            text="View",
             command=lambda:
             [getScheduleCommand(),
              continueButton.grid_remove()])
@@ -401,7 +401,7 @@ def selectOptionCommand():
             bg="#363636",
             width=10,
             fg='white',
-            text="Select Member",
+            text="Select",
             command= lambda:
             [completeTaskCommand(),
             continueButton.grid_remove(),
