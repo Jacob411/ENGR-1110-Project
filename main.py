@@ -2,9 +2,12 @@ from tkcalendar import Calendar
 from member import member
 from task import task
 from tkinter import *
-
+# collaborators: Hayden, Jacob, Alden, Allen. Grouo 33.
+# we used github and all fixed different parts as a we built.
+# collaborated on most parts if not all.
 #initializes window
 root = Tk()
+#setting up our main window font and bg and size.
 root.option_add("*Font", 'Sans 20')
 root.configure(bg='#202020')
 root.title("TeamMate")
@@ -12,7 +15,7 @@ width= root.winfo_screenwidth()
 height= root.winfo_screenheight()
 #setting tkinter window size
 root.geometry("%dx%d" % (width, height))
-
+#setting up frames in our main window.
 Header = Frame(root, bg='black', height=30)
 Content = Frame(root, pady=10)
 Footer = Frame(root)
@@ -37,7 +40,7 @@ teamNameEntry = Entry(Content, bg="#202020", fg='white',borderwidth=5)
 descriptionEntry = Entry(Content,  bg="#202020", fg='white',borderwidth=5)
 numTeamMembersEntry = Entry(Content, width=5,  bg="#202020", fg='white',borderwidth=5)
 taskListLabel = Label(Content)
-
+#more widgets
 cal = Calendar(Content, font="Sans 12",  selectmode='day')
 select = StringVar()
 getScheduleDropDownSelection = StringVar()
@@ -61,7 +64,11 @@ nameList = []
 roleList = []
 
 
-#methods
+#functions for our buttons.
+
+
+
+#takes entries from dynamically created array of entries and puts into our teamlist.
 def addTeamsMembers():
     global nameList
     global roleList
@@ -83,7 +90,7 @@ def addTeamsMembers():
     startUp()
     instruction.set("Team Created!")
 
-
+#puts dynamically created number of entries on the screen based on what user input.
 def createTeamCommand():
     global teamName
     global numTeamMembers
@@ -117,7 +124,7 @@ def createTeamCommand():
 
     instruction.set("Creating Team")
 
-
+#appends a single member to the team list.
 def addMemberCommand():
 
     teamList.append(member(nameEntry.get(), roleEntry.get()))
@@ -127,7 +134,7 @@ def addMemberCommand():
     roleEntry.grid_remove()
     instruction.set("Member Added!")
 
-
+#a method to destroy instances of option menu
 def listRemove():
     list = Content.grid_slaves()
     count = 0
@@ -139,7 +146,7 @@ def listRemove():
             if count == 1:
                 l.destroy()
 
-
+#retrieves a members schedule by date and puts it on screen.
 def getScheduleCommand():
     name = getScheduleDropDownSelection.get()
     print(name)
@@ -166,7 +173,7 @@ def getScheduleCommand():
                         ])
     doneButton.grid(row=2, column=3)
 
-
+#adds a task to tasklist for a specified member.
 def addTaskCommand():
     task1 = task(descriptionEntry.get(), select.get(), cal.get_date())
     print(descriptionEntry.get(), select.get())
@@ -189,6 +196,7 @@ def addTaskCommand():
             if count == 1:
                 l.destroy()
 
+#removes tasks from task list for a member
 def completeTaskCommand():
     nameToFind = DropDownSelection2.get()
     i = 0
@@ -210,7 +218,7 @@ def completeTaskCommand():
             menu.grid_remove()
          ])
     completeTaskButton.grid(row=1, column=0)
-    
+#removes a task
 def deleteTaskFromList(teamIndex):
     i =0
     taskIndex = 0
@@ -221,7 +229,7 @@ def deleteTaskFromList(teamIndex):
     del teamList[teamIndex].taskList[taskIndex]
     print("testedddd\n", teamList[teamIndex].taskList)
 
-
+#removes a member from the team list
 def removeMemberCommand():
     nameToFind = dropDownSelection4.get()
     i = 0
@@ -229,7 +237,7 @@ def removeMemberCommand():
         if(teamList[i].name == nameToFind):
             indexToDelete = i
     del teamList[indexToDelete]
-
+#change role (finds member by now)
 def changeRoleCommand():
     newRoleEntry = Entry(Content,  bg="#202020", fg='white',borderwidth=5)
     newRoleEntry.grid(row=0, column=1)
@@ -240,12 +248,15 @@ def changeRoleCommand():
         finishChangeRoleButton.grid_remove()
         ])
     finishChangeRoleButton.grid(row=1, column=0)
+#function to chnage role
 def changeRole(name, role):
     i = 0
     for i in range(len(teamList)):
         if(teamList[i].name == name):
             teamList[i].role = role
+#the main dropdown button command
 def selectOptionCommand():
+    #resets window
     currentOption = dropDownSelection.get()
     list = Content.grid_slaves()
     count = 0
@@ -259,7 +270,7 @@ def selectOptionCommand():
     dropDownSelection.set(currentOption)
     newDropDown.grid(row=0, column=0)
     
-
+    #check to see what was selected
     if dropDownSelection.get() == options[0]:
         instruction.set("Select Member")
         dropDownSelection4.set("Member to Remove")
@@ -410,7 +421,7 @@ def selectOptionCommand():
             ]
         )
         continueButton.grid(row=1, column=0)
-
+#options for menu
 
 options = [
     "Remove Member",
@@ -434,7 +445,7 @@ def tempTextTeam(e):
 
 teamNameEntry.insert(0, "Enter Team Name")
 teamNameEntry.bind("<FocusIn>", tempTextTeam)
-
+#sets up continue button for start up
 continueButton = Button(Content, 
                         text="Continue",
                         bg='#363636',
@@ -448,20 +459,21 @@ continueButton = Button(Content,
                             teamNameEntry.grid_remove()
                         ])
 numTeamMembersSpinBox = Spinbox(Content, from_=1, to=100, width=5, bg="#202020", fg='white')
+#runs when opened, shows a welcome message and continue button
 def welcomeCommand():
     continueButton.grid(row=0, column=0)
     teamNameEntry.grid(row=0, column=1, padx=50)
     numTeamMembersSpinBox.grid(row=0, column=3)
     instruction.set("Enter Team Information")
 
-
+#after welcome message and team created the optuons for editing are displayed
 def startUp():
     dropDown.grid(row=0, column=0)
     dropDownButton = Button(Content, text="Select Option", bg="#363636", fg='white', width=10,
                             command=selectOptionCommand)
     dropDownButton.grid(row=2, column=0)
 
-
+#opening welcome
 welcomeLabel = Label(Content, text="Welcome to teamMate!", relief= "flat", font=('Sans open', 20), bg="#202020", fg="white")
 welcomeLabel.grid(row=0, column=0, pady=40)
 Content.config(bg="#202020")
