@@ -2,19 +2,24 @@ from tkcalendar import Calendar
 from member import member
 from task import task
 from tkinter import *
-# collaborators: Hayden, Jacob, Alden, Allen. Grouo 33.
+
+# collaborators: Hayden, Jacob, Alden, Allen. Group 33.
 # we used github and all fixed different parts as a we built.
 # collaborated on most parts if not all.
+
 #initializes window
 root = Tk()
+
 #setting up our main window font and bg and size.
 root.option_add("*Font", 'Sans 20')
 root.configure(bg='#202020')
 root.title("TeamMate")
 width= root.winfo_screenwidth()
 height= root.winfo_screenheight()
+
 #setting tkinter window size
 root.geometry("%dx%d" % (width, height))
+
 #setting up frames in our main window.
 Header = Frame(root, bg='black', height=30)
 Content = Frame(root, pady=10)
@@ -40,6 +45,7 @@ teamNameEntry = Entry(Content, bg="#202020", fg='white',borderwidth=5)
 descriptionEntry = Entry(Content,  bg="#202020", fg='white',borderwidth=5)
 numTeamMembersEntry = Entry(Content, width=5,  bg="#202020", fg='white',borderwidth=5)
 taskListLabel = Label(Content)
+
 #more widgets
 cal = Calendar(Content, font="Sans 12",  selectmode='day')
 select = StringVar()
@@ -65,8 +71,6 @@ roleList = []
 
 
 #functions for our buttons.
-
-
 
 #takes entries from dynamically created array of entries and puts into our teamlist.
 def addTeamsMembers():
@@ -146,7 +150,7 @@ def listRemove():
             if count == 1:
                 l.destroy()
 
-#retrieves a members schedule by date and puts it on screen.
+#retrieves a member's schedule by date and puts it on screen.
 def getScheduleCommand():
     name = getScheduleDropDownSelection.get()
     print(name)
@@ -218,6 +222,7 @@ def completeTaskCommand():
             menu.grid_remove()
          ])
     completeTaskButton.grid(row=1, column=0)
+    
 #removes a task
 def deleteTaskFromList(teamIndex):
     i =0
@@ -237,7 +242,8 @@ def removeMemberCommand():
         if(teamList[i].name == nameToFind):
             indexToDelete = i
     del teamList[indexToDelete]
-#change role (finds member by now)
+    
+#change role (finds member by row)
 def changeRoleCommand():
     newRoleEntry = Entry(Content,  bg="#202020", fg='white',borderwidth=5)
     newRoleEntry.grid(row=0, column=1)
@@ -248,12 +254,14 @@ def changeRoleCommand():
         finishChangeRoleButton.grid_remove()
         ])
     finishChangeRoleButton.grid(row=1, column=0)
-#function to chnage role
+    
+#function to change role
 def changeRole(name, role):
     i = 0
     for i in range(len(teamList)):
         if(teamList[i].name == name):
             teamList[i].role = role
+            
 #the main dropdown button command
 def selectOptionCommand():
     #resets window
@@ -271,6 +279,8 @@ def selectOptionCommand():
     newDropDown.grid(row=0, column=0)
     
     #check to see what was selected
+    
+    #select member option
     if dropDownSelection.get() == options[0]:
         instruction.set("Select Member")
         dropDownSelection4.set("Member to Remove")
@@ -298,6 +308,7 @@ def selectOptionCommand():
         )
         continueButton.grid(row=1, column=0)
 
+    #Add member option
     if dropDownSelection.get() == options[1]:
         instruction.set("Enter Member Information")
         continueButton = Button(
@@ -315,6 +326,7 @@ def selectOptionCommand():
         nameEntry.grid(row=0, column=1)
         roleEntry.grid(row=0, column=2)
 
+    #Change role option
     if dropDownSelection.get() == options[2]:
         instruction.set("Change Role")
         i = 0
@@ -335,7 +347,8 @@ def selectOptionCommand():
             instruction.set("Role Changed!")
             ])
         continueButton.grid(row=1, column=0)
-
+        
+    #View schedule option
     if dropDownSelection.get() == options[3]:
         getScheduleDropDownSelection.set("Select Member to View")
         i = 0
@@ -361,6 +374,7 @@ def selectOptionCommand():
         continueButton.grid(row=1, column=0)
         cal.grid(row=0, column=1, rowspan=2, columnspan=2)
 
+    #Add task option
     if dropDownSelection.get() == options[4]:
         select.set("Select Role for Task")
         i = 0
@@ -395,6 +409,7 @@ def selectOptionCommand():
              instruction.set("Task Added!")])
         continueButton.grid(row=1, column=0)
 
+    #Complete task option
     if dropDownSelection.get() == options[5]:
         DropDownSelection2.set("Which teamMember?")
         dropDownSelection3.set("Which Task?")
@@ -421,8 +436,8 @@ def selectOptionCommand():
             ]
         )
         continueButton.grid(row=1, column=0)
+        
 #options for menu
-
 options = [
     "Remove Member",
     "Add Member",
@@ -435,7 +450,6 @@ dropDownSelection = StringVar()
 dropDownSelection.set(options[0])
 dropDown = OptionMenu(Content, dropDownSelection, *options)
 dropDown.config( bg="#202020", fg='white')
-
 
 
 def tempTextTeam(e):
@@ -459,6 +473,7 @@ continueButton = Button(Content,
                             teamNameEntry.grid_remove()
                         ])
 numTeamMembersSpinBox = Spinbox(Content, from_=1, to=100, width=5, bg="#202020", fg='white')
+
 #runs when opened, shows a welcome message and continue button
 def welcomeCommand():
     continueButton.grid(row=0, column=0)
